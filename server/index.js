@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import { connectDB } from './config/db.js';
+import authRoutes from './routes/auth.js';
 
 dotenv.config();
 const app = express();
@@ -15,10 +16,11 @@ app.use(cors({
 app.use(express.json());
 app.use(cookieParser());
 
-// Routes (will be imported later)
+// Routes 
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: 'Server is running' });
 });
+app.use('/api/auth', authRoutes);
 
 // Connect to MongoDB
 connectDB();

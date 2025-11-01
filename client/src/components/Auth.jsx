@@ -1,32 +1,90 @@
 import { useState } from 'react';
+import '../styles/Auth.css';
 
 export default function Auth({ setIsAuthenticated }) {
-  const [isLogin, setIsLogin] = useState(true);
-  const [form, setForm] = useState({ username: '', email: '', password: '', confirm: '' });
+  const [isSignUp, setIsSignUp] = useState(false);
+  const [formData, setFormData] = useState({
+    username: '',
+    email: '',
+    password: '',
+    confirmPassword: ''
+  });
+  const [error, setError] = useState('');
 
-  const submit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    // placeholder: set auth true for demo
+    setError('');
+    
+    // Basic validation
+    if (isSignUp && formData.password !== formData.confirmPassword) {
+      setError('Passwords do not match');
+      return;
+    }
+
+    // For now, just authenticate (we'll add API integration later)
     setIsAuthenticated(true);
   };
 
   return (
-    <div className="auth-page">
-      <div className="auth-card card">
-        <h3>{isLogin ? 'Login' : 'Create Account'}</h3>
-        <form onSubmit={submit}>
-          {!isLogin && <input className="input-field" placeholder="Username" value={form.username} onChange={e => setForm({...form, username: e.target.value})} />}
-          <input className="input-field" placeholder="Email or Username" value={form.email} onChange={e => setForm({...form, email: e.target.value})} />
-          <input className="input-field" type="password" placeholder="Password" value={form.password} onChange={e => setForm({...form, password: e.target.value})} />
-          {!isLogin && <input className="input-field" type="password" placeholder="Confirm Password" value={form.confirm} onChange={e => setForm({...form, confirm: e.target.value})} />}
-          <div className="actions">
-            <button className="button primary" type="submit">{isLogin ? 'Login' : 'Create Account'}</button>
-          </div>
+    <div className="auth-container">
+      <div className="auth-card">
+        <div className="auth-header">
+          <div className="logo">✨ Gratitude Journal</div>
+          <h2>Start your gratitude journey today! ✨</h2>
+        </div>
+
+        <form onSubmit={handleSubmit}>
+          {isSignUp && (
+            <input
+              type="text"
+              placeholder="Choose a username"
+              value={formData.username}
+              onChange={(e) => setFormData({...formData, username: e.target.value})}
+              className="auth-input"
+            />
+          )}
+
+          <input
+            type="email"
+            placeholder="Enter your email"
+            value={formData.email}
+            onChange={(e) => setFormData({...formData, email: e.target.value})}
+            className="auth-input"
+          />
+
+          <input
+            type="password"
+            placeholder="Create a password"
+            value={formData.password}
+            onChange={(e) => setFormData({...formData, password: e.target.value})}
+            className="auth-input"
+          />
+
+          {isSignUp && (
+            <input
+              type="password"
+              placeholder="Confirm your password"
+              value={formData.confirmPassword}
+              onChange={(e) => setFormData({...formData, confirmPassword: e.target.value})}
+              className="auth-input"
+            />
+          )}
+
+          {error && <div className="error-message">{error}</div>}
+
+          <button type="submit" className="auth-button">
+            {isSignUp ? 'Create Account' : 'Login'}
+          </button>
         </form>
 
         <div className="auth-switch">
-          {isLogin ? "Don't have an account? " : "Already have an account? "}
-          <button className="link-btn" onClick={() => setIsLogin(!isLogin)}>{isLogin ? 'Sign up' : 'Login'}</button>
+          {isSignUp ? 'Already have an account?' : "Don't have an account?"}
+          <button 
+            className="switch-button"
+            onClick={() => setIsSignUp(!isSignUp)}
+          >
+            {isSignUp ? 'Login' : 'Sign up'}
+          </button>
         </div>
       </div>
     </div>

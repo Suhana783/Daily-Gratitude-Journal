@@ -8,8 +8,7 @@ import Auth from './components/Auth';
 import './App.css';
 
 export default function App() {
-  // set true to preview authenticated UI quickly, toggle for testing auth flow
-  const [isAuthenticated, setIsAuthenticated] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false); // Set to false to see auth page
 
   return (
     <Router>

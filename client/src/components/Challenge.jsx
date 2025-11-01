@@ -1,40 +1,53 @@
 import { useState } from 'react';
-
-const prompts = Array.from({ length: 21 }, (_, i) => `Day ${i+1}: Prompt for day ${i+1}.`);
+import '../styles/Challenge.css';
 
 export default function Challenge() {
-  const [completed, setCompleted] = useState([0]); // example: day 1 completed
-  const current = completed.length;
+  const [currentDay, setCurrentDay] = useState(1);
+  const totalDays = 21;
 
-  const markComplete = (day) => {
-    if (day === current + 1) {
-      setCompleted(prev => [...prev, day]);
-    }
-  };
+  const challenges = Array(totalDays).fill().map((_, i) => ({
+    day: i + 1,
+    completed: i < currentDay,
+    locked: i > currentDay,
+    prompt: `Day ${i + 1}: Write about three things that made you smile today.`
+  }));
 
   return (
-    <div className="page-wrap">
-      <h2 className="page-title">21-Day Gratitude Challenge</h2>
-      <div className="card progress-card">
-        <div className="progress">Progress: {current} / 21</div>
+    <div className="challenge-container">
+      <div className="challenge-header">
+        <h1>21-Day Gratitude Challenge</h1>
+        <p>Transform your mindset with 21 days of intentional gratitude ✨</p>
+      </div>
+
+      <div className="progress-card">
+        <h3>Your Progress</h3>
+        <div className="progress-bar">
+          <div 
+            className="progress-fill"
+            style={{ width: `${(currentDay / totalDays) * 100}%` }}
+          ></div>
+        </div>
+        <p>{currentDay}/{totalDays} Days</p>
+        <p className="progress-message">Keep going! You're {Math.round((currentDay / totalDays) * 100)}% of the way there.</p>
       </div>
 
       <div className="challenge-list">
-        {prompts.map((p, idx) => {
-          const day = idx + 1;
-          const status = day <= current ? (day < current ? 'completed' : 'current') : 'locked';
-          return (
-            <div key={day} className={`challenge-card ${status}`}>
-              <div className="day">Day {day}</div>
-              <div className="prompt">{p}</div>
-              <div className="card-actions">
-                {status === 'current' && <button className="button primary" onClick={() => markComplete(day)}>Mark as Complete</button>}
-                {status === 'completed' && <span className="completed-badge">✓ Completed</span>}
-                {status === 'locked' && <span className="locked">🔒 Complete previous days to unlock</span>}
-              </div>
-            </div>
-          );
-        })}
+        {challenges.map(challenge => (
+          <div 
+            key={challenge.day} 
+            className={`challenge-item ${challenge.completed ? 'completed' : ''} ${challenge.locked ? 'locked' : ''}`}
+          >
+            <div className="challenge-day">Day {challenge.day}</div>
+            <p className="challenge-prompt">{challenge.prompt}</p>
+            {challenge.completed ? (
+              <div className="status">✓ Completed</div>
+            ) : challenge.locked ? (
+              <div className="status">🔒 Complete previous days to unlock</div>
+            ) : (
+              <button className="mark-complete">Mark as Complete</button>
+            )}
+          </div>
+        ))}
       </div>
     </div>
   );

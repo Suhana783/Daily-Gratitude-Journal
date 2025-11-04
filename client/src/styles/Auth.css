@@ -1,17 +1,13 @@
-.auth-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  background: linear-gradient(135deg, #faf5ff 0%, #fff1f2 100%);
-  padding: 20px;
-}
-
 .auth-card {
-  background: white;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgb(247, 217, 243);
   padding: 2rem;
   border-radius: 16px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  border: 1.2px solid #8e3aee;
+  box-shadow: 0 0 15px 3px #9B5DE0;
   width: 100%;
   max-width: 400px;
 }
@@ -21,17 +17,14 @@
   margin-bottom: 2rem;
 }
 
-.logo {
-  font-size: 1.5rem;
-  font-weight: 600;
+.auth-header h1 {
   color: #8b5cf6;
+  font-size: 1.8rem;
   margin-bottom: 0.5rem;
 }
 
-.auth-header h2 {
-  font-size: 1.1rem;
-  color: #4b5563;
-  font-weight: 500;
+.auth-header p {
+  color: #6b7280;
 }
 
 .auth-input {
@@ -52,13 +45,13 @@
 .auth-button {
   width: 100%;
   padding: 0.75rem;
-  background: linear-gradient(135deg, #8b5cf6, #ec4899);
+  background: #8b5cf6;
   color: white;
   border: none;
   border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
-  transition: opacity 0.2s;
+  margin-top: 1rem;
 }
 
 .auth-button:hover {
@@ -66,18 +59,30 @@
 }
 
 .auth-switch {
-  margin-top: 1.5rem;
   text-align: center;
-  color: #6b7280;
+  margin-top: 1rem;
+  color: #666;
 }
 
 .switch-button {
   background: none;
   border: none;
-  color: #8b5cf6;
-  font-weight: 600;
-  cursor: pointer;
+  padding: 0;
   margin-left: 0.5rem;
+  color: #8b5cf6;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.switch-button:hover {
+  text-decoration: underline;
+}
+
+/* Remove any outline or focus styles */
+.switch-button:focus {
+  outline: none;
+  box-shadow: none;
 }
 
 .error-message {
@@ -85,4 +90,24 @@
   font-size: 0.875rem;
   margin-bottom: 1rem;
   text-align: center;
+}
+
+.password-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 5px;
+}
+
+.password-toggle:hover {
+  opacity: 0.7;
 }
